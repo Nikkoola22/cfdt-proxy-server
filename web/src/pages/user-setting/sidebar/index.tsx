@@ -23,7 +23,7 @@ const menuItems = (t: TFunction) => [
   { icon: Banknote, label: 'MCP', key: Routes.Mcp },
   { icon: Users, label: t('setting.team'), key: Routes.Team },
   { icon: User, label: t('setting.profile'), key: Routes.Profile },
-  { icon: Unplug, label: t('setting.api'), key: Routes.Api },
+  // { icon: Unplug, label: t('setting.api'), key: Routes.Api },
   // {
   //   icon: MessageSquareQuote,
   //   label: 'Prompt Templates',

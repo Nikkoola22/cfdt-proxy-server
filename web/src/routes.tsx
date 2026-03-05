@@ -146,23 +146,7 @@ const routeConfigOptions = [
   {
     path: Routes.Root,
     layout: false,
-    Component: () => import('@/layouts/next'),
-    loader: ({ request }) => {
-      const url = new URL(request.url);
-      const auth = url.searchParams.get('auth');
-      if (auth) {
-        authorizationUtil.setAuthorization(auth);
-        url.searchParams.delete('auth');
-        return redirect(`${url.pathname}${url.search}`);
-      }
-      return null;
-    },
-    children: [
-      {
-        path: Routes.Root,
-        Component: () => import('@/pages/home'),
-      },
-    ],
+    Component: () => import('@/pages/modern-home'),
   },
   {
     path: Routes.Datasets,
@@ -388,10 +372,7 @@ const routeConfigOptions = [
         path: '/user-setting/team',
         Component: () => import('@/pages/user-setting/setting-team'),
       },
-      {
-        path: `/user-setting${Routes.Api}`,
-        Component: () => import('@/pages/user-setting/setting-api'),
-      },
+
       {
         path: `/user-setting${Routes.Mcp}`,
         Component: () => import('@/pages/user-setting/mcp'),

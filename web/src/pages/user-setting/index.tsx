@@ -43,7 +43,7 @@ const UserSetting = () => {
           'overflow-auto flex flex-1 pt-4 pr-4 pb-4',
         )}
       >
-        <SideBar></SideBar>
+        <SideBar />
         <div className={cn(styles.outletWrapper, 'flex flex-1 rounded-lg')}>
           <Outlet></Outlet>
         </div>
