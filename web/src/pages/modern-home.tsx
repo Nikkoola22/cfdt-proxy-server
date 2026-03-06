@@ -1,14 +1,33 @@
-import { useState } from 'react';
+
+import { useState, useRef } from 'react';
+import SimplePythonChatbot from '@/components/SimplePythonChatbot';
 
 export default function ModernHome() {
+
   const [testResult, setTestResult] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  // Chatbot minimal mock (à adapter selon logique réelle)
+  const controllerRef = useRef(new AbortController());
+  const conversationMock: IClientConversation = {
+    id: 'demo',
+    dialog_id: 'demo',
+    avatar: '',
+    message: [],
+    reference: [],
+    name: 'Démo',
+    update_date: '',
+    update_time: Date.now(),
+    is_new: true,
+    create_date: '',
+    create_time: Date.now(),
+  };
+  const stopOutputMessage = () => controllerRef.current.abort();
 
   const handleTest = async () => {
     setLoading(true);
     setTestResult(null);
     try {
-      const res = await fetch('/api/health');
+      const res = await fetch('/health');
       if (res.ok) {
         setTestResult('API opérationnelle !');
       } else {
@@ -49,8 +68,10 @@ export default function ModernHome() {
             {testResult}
           </div>
         )}
+        {/* Intégration du chatbot Python */}
+        <SimplePythonChatbot />
       </div>
-      <style jsx global>{`
+      <style>{`
         @keyframes gradient-x {
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }

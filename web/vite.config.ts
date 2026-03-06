@@ -91,8 +91,9 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           ws: true,
         },
+        // Proxy /api vers le backend Python SaaS-MVP en local
         '/api': {
-          target: 'http://127.0.0.1:9380/',
+          target: process.env.VERCEL === '1' ? undefined : 'http://127.0.0.1:8010/',
           changeOrigin: true,
           ws: true,
         },

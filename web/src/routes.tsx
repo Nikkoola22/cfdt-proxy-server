@@ -106,12 +106,12 @@ const withLazyRoute = (
 const routeConfigOptions = [
   {
     path: '/login',
-    Component: () => import('@/pages/login-next'),
+    Component: () => import('@/pages/modern-home'),
     layout: false,
   },
   {
     path: '/login-next',
-    Component: () => import('@/pages/login-next'),
+    Component: () => import('@/pages/modern-home'),
     layout: false,
   },
   {
