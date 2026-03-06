@@ -31,7 +31,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 # python-pptx:   default-jdk                              tika-server-standard-3.2.3.jar
 # selenium:      libatk-bridge2.0-0                       chrome-linux64-121-0-6167-85
 # Building C extensions: libpython3-dev libgtk-4-1 libnss3 xdg-utils libgbm-dev
-RUN --mount=type=cache,id=ragflow_apt,target=/var/cache/apt,sharing=locked \
+## Railway: unsupported cache mount
+# RUN --mount=type=cache,id=ragflow_apt,target=/var/cache/apt,sharing=locked \
     apt update && \
     apt --no-install-recommends install -y ca-certificates; \
     if [ "$NEED_MIRROR" == "1" ]; then \
@@ -56,7 +57,8 @@ RUN --mount=type=cache,id=ragflow_apt,target=/var/cache/apt,sharing=locked \
     apt install -y postgresql-client
 
 ARG NGINX_VERSION=1.29.5-1~noble
-RUN --mount=type=cache,id=ragflow_apt,target=/var/cache/apt,sharing=locked \
+## Railway: unsupported cache mount
+# RUN --mount=type=cache,id=ragflow_apt,target=/var/cache/apt,sharing=locked \
     mkdir -p /etc/apt/keyrings && \
     curl -fsSL https://nginx.org/keys/nginx_signing.key | gpg --dearmor -o /etc/apt/keyrings/nginx-archive-keyring.gpg && \
     echo "deb [signed-by=/etc/apt/keyrings/nginx-archive-keyring.gpg] https://nginx.org/packages/mainline/ubuntu/ noble nginx" > /etc/apt/sources.list.d/nginx.list && \
@@ -84,7 +86,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 ENV PATH=/root/.local/bin:$PATH
 
 # nodejs 12.22 on Ubuntu 22.04 is too old
-RUN --mount=type=cache,id=ragflow_apt,target=/var/cache/apt,sharing=locked \
+## Railway: unsupported cache mount
+# RUN --mount=type=cache,id=ragflow_apt,target=/var/cache/apt,sharing=locked \
     curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt purge -y nodejs npm cargo && \
     apt autoremove -y && \
@@ -110,7 +113,8 @@ RUN cargo --version && rustc --version
 # Add msssql ODBC driver
 # macOS ARM64 environment, install msodbcsql18.
 # general x86_64 environment, install msodbcsql17.
-RUN --mount=type=cache,id=ragflow_apt,target=/var/cache/apt,sharing=locked \
+## Railway: unsupported cache mount
+# RUN --mount=type=cache,id=ragflow_apt,target=/var/cache/apt,sharing=locked \
     curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
     curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
     apt update && \
@@ -155,7 +159,8 @@ COPY pyproject.toml uv.lock ./
 
 # https://github.com/astral-sh/uv/issues/10462
 # uv records index url into uv.lock but doesn't failover among multiple indexes
-RUN --mount=type=cache,id=ragflow_uv,target=/root/.cache/uv,sharing=locked \
+## Railway: unsupported cache mount
+# RUN --mount=type=cache,id=ragflow_uv,target=/root/.cache/uv,sharing=locked \
     if [ "$NEED_MIRROR" == "1" ]; then \
         sed -i 's|pypi.org|pypi.tuna.tsinghua.edu.cn|g' uv.lock; \
     else \
@@ -167,7 +172,8 @@ RUN --mount=type=cache,id=ragflow_uv,target=/root/.cache/uv,sharing=locked \
 
 COPY web web
 COPY docs docs
-RUN --mount=type=cache,id=ragflow_npm,target=/root/.npm,sharing=locked \
+## Railway: unsupported cache mount
+# RUN --mount=type=cache,id=ragflow_npm,target=/root/.npm,sharing=locked \
     export NODE_OPTIONS="--max-old-space-size=4096" && \
     cd web && npm install && npm run build
 
